@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+register
+{% endblock %}
+
+{% block content %}
+
+ <!-- Breadcrumb Start -->
+ <div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="/">Home</a>
+                <span class="breadcrumb-item active">register</span>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<div class="container-fluid">
+    <h2 class="section-title position-relative text-uppercase text-center mx-xl-5 mb-4"><span class="bg-secondary pr-3">register</span></h2>
+    <div class="px-xl-5">
+        <div class="mb-5">
+            <div class="contact-form bg-light p-30">
+                <div id="success"></div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="control-group">
+                        {{form.phone}}
+                        {% for error in form.phone.errors %}
+                        <p class="alert alert-danger">{{error}}</p>
+                        {% endfor %}
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div>
+                        <input class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton" value="login">
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
