@@ -1,4 +1,4 @@
-from product.models import Category
+from product.models import Category,Product
 
 def categories(request):
     """
@@ -6,7 +6,8 @@ def categories(request):
     """
     categories = Category.objects.all()
 
+    recent_products = Product.objects.all()[:6]
 
-    context = {"categories": categories}
+    context = {"categories": categories , "recent_products":recent_products}
 
     return context

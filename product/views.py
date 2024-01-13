@@ -1,10 +1,30 @@
 from django.shortcuts import render
 from django.views.generic import DetailView,ListView
 from .models import Product
+from django.db.models import Q
 
 class ProductDetailView(DetailView):
     template_name="product/detail.html"
     model=Product
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        request = self.request
+        product = self.get_object()
+
+        product_categories = product.category.all()
+
+        suggested_products = Product.objects.filter(
+            Q(category__in=product_categories) &
+            ~Q(id=product.id)  # Exclude the current video from the results
+        ).order_by('?').distinct()[:5]
+
+        context = {
+                "product": product,
+                "suggested_products": suggested_products,
+            }
+
 
 
 class ProductsListView(ListView):
